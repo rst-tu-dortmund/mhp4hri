@@ -18,8 +18,9 @@ Further information about the installation, usage, and other parts can be found 
 ## Citation
 If you use this repository for your research, please cite our paper:
 
-Heiko Renz, Maximilian Krämer, and Torsten Bertram. 2024. Moving Horizon Planning for Human-Robot Interaction. In Proceedings of the 2024 ACM/IEEE International Conference on Human-Robot Interaction (HRI ’24), March 11–14, 2024, Boulder, CO, USA. ACM, New York, NY, USA, 5 pages. https://doi.org/10.1145/3610977.3637476
+Heiko Renz, Maximilian Krämer, and Torsten Bertram. 2024. Moving Horizon Planning for Human-Robot Interaction. In Proceedings of the 2024 ACM/IEEE International Conference on Human-Robot Interaction (HRI ’24), March 11–14, 2024, Boulder, CO, USA. ACM, New York, NY, USA, 5 pages. https://doi.org/10.1145/3610977.3637476 [Accepted for publication]
 
 ## Acknowledgments
 The authors gratefully acknowledge the financial support of the German Research Foundation (DFG, Project number: 497071854)
 
+Furthermore, we gratefully acknowledge the previous work of Christoph Rösmann and Nabil Miri's help while testing this repository.
