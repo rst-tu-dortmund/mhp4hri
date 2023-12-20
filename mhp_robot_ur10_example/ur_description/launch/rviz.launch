@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<launch>
+  <arg name="rviz_config" default="$(find ur_description)/config/ur.rviz"/>
+
+  <!-- start RViz -->
+  <node name="rviz" pkg="rviz" type="rviz" args="-d $(arg rviz_config)" respawn="true" />
+
+</launch>

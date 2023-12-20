@@ -1,0 +1,11 @@
+<?xml version="1.0" ?>
+<launch>
+  <!-- Publisher for UR joint messages -->
+  <node name="rqt_gui"
+        pkg="rqt_gui"
+        type="rqt_gui"
+        respawn="false"
+        output="screen"
+        args="--perspective-file $(find ur_modern_driver)/config/ur10_real.perspective"
+  />
+</launch>

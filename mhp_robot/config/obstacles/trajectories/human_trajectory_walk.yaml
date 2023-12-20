@@ -1,0 +1,34 @@
+# /*********************************************************************
+# *
+# *  Software License Agreement
+# *
+# *  Copyright (c) 2023,
+# *  TU Dortmund University, Institute of Control Theory and System Engineering
+# *  All rights reserved.
+# *
+# *  This program is free software: you can redistribute it and/or modify
+# *  it under the terms of the GNU General Public License as published by
+# *  the Free Software Foundation, either version 3 of the License, or
+# *  (at your option) any later version.
+# *
+# *  This program is distributed in the hope that it will be useful,
+# *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+# *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# *  GNU General Public License for more details.
+# *
+# *  You should have received a copy of the GNU General Public License
+# *  along with this program.  If not, see <https://www.gnu.org/licenses/>.
+# *
+# *  Authors: Heiko Renz
+# *********************************************************************/
+
+human_trajectories:
+  - human_id: 0
+    duration: 3.0 # Duration of the motion in seconds
+    steps: 100 # Number of discretization steps
+    loop: false
+    return: true
+    foot1: [2.5, 0.0, -1.57] # Start position of the skeleton's hip (x,y,theta)
+    foot2: [1.0, 0.0, -1.57] # End position of the skeleton's hip (x,y,theta)
+    angles1: [0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0] # Start angles of the skeleton
+    angles2: [0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0] # End angles of the skeleton

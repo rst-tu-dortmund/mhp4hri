@@ -1,0 +1,111 @@
+<?xml version="1.0" ?>
+<launch>
+    <!-- Arguments for the workspace_monitor and the obstacles-->
+    <arg name="workspace_monitor_mode" default="manual"/>
+    <arg name="static_obstacles" default="$(find mhp_robot)/config/obstacles/none.yaml"/>
+    <arg name="dynamic_obstacles" default="$(find mhp_robot)/config/obstacles/none.yaml"/>
+    <arg name="planes" default="$(find mhp_robot)/config/obstacles/none.yaml"/>
+    <arg name="utility_objects" default="$(find mhp_robot)/config/obstacles/none.yaml"/>
+    <arg name="humans" default="$(find mhp_robot)/config/obstacles/MyHuman.yaml"/>
+    <arg name="obstacle_trajectories" default="$(find mhp_robot)/config/obstacles/none.yaml"/>
+    <arg name="human_trajectories" default="$(find mhp_robot)/config/obstacles/none.yaml"/>
+
+    <!-- Arguments for the prediction type -->
+    <arg name="prediction_mode" default="None"/> <!-- Options are None, Kalman,SPL, Polynom, Golay -->
+    <group unless="$(eval prediction_mode=='None')" ns="human_motion_extrapolation">
+        <!-- Common Parameters -->
+        <param name="prediction_mode" type="str" value="$(arg prediction_mode)" />
+        <rosparam command="load" file="$(find mhp_robot)/config/human_motion_prediction/extrapolation.yaml" />
+
+        <!-- Polynom-->
+        <group if="$(eval prediction_mode=='Polynom')" ns="state_estimator/Polynom">
+            <rosparam command="load" file="$(find mhp_robot)/config/human_motion_prediction/polynom_prediction.yaml" />
+        </group>
+
+        <!-- Kalman-->
+        <group if="$(eval prediction_mode=='Kalman')" ns="state_estimator/Kalman">
+            <rosparam command="load" file="$(find mhp_robot)/config/human_motion_prediction/kalman_prediction.yaml" />
+        </group>
+
+        <!-- Savitzky-Golay-->
+        <group if="$(eval prediction_mode=='Golay')" ns="state_estimator/Golay">
+            <rosparam command="load" file="$(find mhp_robot)/config/human_motion_prediction/golay_prediction.yaml" />
+        </group>
+
+        <!-- SPL -->
+        <group if="$(eval prediction_mode=='SPL')" ns="spl_prediction">
+            <param name="save_dir" type="str" value="$(find mhp_robot)/config/spl_model/"/>
+            <param name="data_dir" type="str" value="$(find mhp_robot)/config/spl_model/"/>
+            <rosparam command="load" file="$(find mhp_robot)/config/human_motion_prediction/spl_prediction.yaml" />
+
+            <!-- Node for data preparation -->
+            <node pkg="mhp_robot" name="python_tf_listener" type="tfListener.py" output="screen" >
+            </node>
+            <!-- Node for prediction of human motions -->
+            <node pkg="mhp_robot" name="motion_prediction_spl" type="motion_prediction_spl.py" output="screen" />
+        </group>
+    </group>
+
+    <arg name="foot_print_prediction_mode" default="None" /> <!-- Options are None, Polynom, Golay -->
+    <group unless="$(eval foot_print_prediction_mode=='None')" ns="footprint_human_motion_extrapolation">
+        <!-- Common Parameters -->
+        <rosparam command="load" file="$(find mhp_robot)/config/human_motion_prediction/extrapolation.yaml" />
+        <!--Upload parameters for foot print prediction-->
+        <param name="foot_print_prediction_mode" type="str" value="$(arg foot_print_prediction_mode)" />
+
+        <!-- Polynom-->
+        <group if="$(eval foot_print_prediction_mode=='Polynom')" ns="state_estimator/Polynom">
+            <rosparam command="load" file="$(find mhp_robot)/config/human_motion_prediction/polynom_prediction.yaml" />
+        </group>
+
+        <!-- Kalman-->
+        <group if="$(eval foot_print_prediction_mode=='Kalman')" ns="state_estimator/Kalman">
+            <rosparam command="load" file="$(find mhp_robot)/config/human_motion_prediction/kalman_prediction.yaml" />
+        </group>
+
+        <!-- Savitzky-Golay-->
+        <group if="$(eval foot_print_prediction_mode=='Golay')" ns="state_estimator/Golay">
+            <rosparam command="load" file="$(find mhp_robot)/config/human_motion_prediction/golay_prediction.yaml" />
+        </group>
+
+
+    </group> 
+
+    <!-- Arguments for uncertainty estimation of predictions -->
+    <arg name="uncertainty_mode" default="None"/> <!-- Options are None, GMM and Constant -->
+    <group unless="$(eval uncertainty_mode=='None')" ns="extrapolation_uncertainties">
+        <param name="uncertainty_mode" type="str" value="$(arg uncertainty_mode)" />
+        <rosparam command="load" file="$(find mhp_robot)/config/human_motion_prediction/uncertainty.yaml" />
+    </group>
+
+    <!-- Upload Obstacle YAML -->
+    <include file="$(find mhp_robot)/launch/obstacle_upload.launch">
+        <arg name="static_obstacles" value="$(arg static_obstacles)"/>
+        <arg name="dynamic_obstacles" value="$(arg dynamic_obstacles)"/>
+        <arg name="planes" value="$(arg planes)"/>
+        <arg name="utility_objects" value="$(arg utility_objects)"/>
+        <arg name="humans" value="$(arg humans)"/>
+        <arg name="obstacle_trajectories" value="$(arg obstacle_trajectories)"/>
+        <arg name="human_trajectories" value="$(arg human_trajectories)"/>
+        <arg name="ns" value="obstacles" />
+    </include>
+
+    <!-- Start Workspace Monitor -->
+    <node name="robot_workspace_monitor" pkg="mhp_robot" type="robot_workspace_monitor" respawn="true" output="screen">
+        <param name="workspace_monitor_mode" type="str" value="$(arg workspace_monitor_mode)" />
+    </node>
+
+    <!-- Start MoCap Client if we use mocap mode -->
+    <group if="$(eval workspace_monitor_mode == 'mocap')">
+        <include file="$(find mhp_robot)/launch/bringup_mocap.launch" />
+    </group>
+
+    <!--Start Rosbag Player if we use bag mode -->
+    <group if="$(eval workspace_monitor_mode=='bag')" ns="bag_parser">
+        <!-- Arguments for simulating a human from a rosbag -->
+        <rosparam command="load" file="$(find mhp_robot)/config/obstacles/rosbag/rosbag_play.yaml" />
+        <node pkg="mhp_robot" name="robot_tf_bag_parser" type="robot_tf_bag_parser" output="log" respawn="true">
+        </node>
+    </group>
+
+</launch>

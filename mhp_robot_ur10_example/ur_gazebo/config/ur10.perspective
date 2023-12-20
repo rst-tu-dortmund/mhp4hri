@@ -1,0 +1,102 @@
+{
+  "keys": {},
+  "groups": {
+    "pluginmanager": {
+      "keys": {
+        "running-plugins": {
+          "type": "repr",
+          "repr": "{u'rqt_service_caller/ServiceCaller': [1], u'rqt_publisher/Publisher': [1]}"
+        }
+      },
+      "groups": {
+        "plugin__rqt_publisher__Publisher__1": {
+          "keys": {},
+          "groups": {
+            "dock_widget__PublisherWidget": {
+              "keys": {
+                "dockable": {
+                  "type": "repr",
+                  "repr": "True"
+                },
+                "parent": {
+                  "type": "repr",
+                  "repr": "None"
+                },
+                "dock_widget_title": {
+                  "type": "repr",
+                  "repr": "u'Message Publisher'"
+                }
+              },
+              "groups": {}
+            },
+            "plugin": {
+              "keys": {
+                "publishers": {
+                  "type": "repr",
+                  "repr": "u\"[{'topic_name': '/ur10/joint0_velocity_controller/command', 'type_name': 'std_msgs/Float64', 'enabled': False, 'rate': 20.0, 'expressions': {u'/ur10/joint0_velocity_controller/command/data': '0.0'}, 'publisher_id': 6, 'counter': 0}, {'topic_name': '/ur10/joint1_velocity_controller/command', 'type_name': 'std_msgs/Float64', 'enabled': False, 'rate': 20.0, 'expressions': {}, 'publisher_id': 7, 'counter': 0}, {'topic_name': '/ur10/joint2_velocity_controller/command', 'type_name': 'std_msgs/Float64', 'enabled': False, 'rate': 20.0, 'expressions': {}, 'publisher_id': 8, 'counter': 0}, {'topic_name': '/ur10/joint3_velocity_controller/command', 'type_name': 'std_msgs/Float64', 'enabled': False, 'rate': 20.0, 'expressions': {}, 'publisher_id': 9, 'counter': 0}, {'topic_name': '/ur10/joint4_velocity_controller/command', 'type_name': 'std_msgs/Float64', 'enabled': False, 'rate': 20.0, 'expressions': {}, 'publisher_id': 10, 'counter': 0}, {'topic_name': '/ur10/joint5_velocity_controller/command', 'type_name': 'std_msgs/Float64', 'enabled': False, 'rate': 20.0, 'expressions': {}, 'publisher_id': 11, 'counter': 0}]\""
+                }
+              },
+              "groups": {}
+            }
+          }
+        },
+        "plugin__rqt_service_caller__ServiceCaller__1": {
+          "keys": {},
+          "groups": {
+            "dock_widget__ServiceCallerWidget": {
+              "keys": {
+                "dockable": {
+                  "type": "repr",
+                  "repr": "True"
+                },
+                "parent": {
+                  "type": "repr",
+                  "repr": "None"
+                },
+                "dock_widget_title": {
+                  "type": "repr",
+                  "repr": "u'Service Caller'"
+                }
+              },
+              "groups": {}
+            },
+            "plugin": {
+              "keys": {
+                "splitter_orientation": {
+                  "type": "repr",
+                  "repr": "2"
+                }
+              },
+              "groups": {}
+            }
+          }
+        }
+      }
+    },
+    "mainwindow": {
+      "keys": {
+        "geometry": {
+          "type": "repr(QByteArray.hex)",
+          "repr(QByteArray.hex)": "QtCore.QByteArray('01d9d0cb00020000000007b50000001b00000eff00000437000007b50000004900000eff0000043700000000000000000780')",
+          "pretty-print": "           7   I   7     "
+        },
+        "state": {
+          "type": "repr(QByteArray.hex)",
+          "repr(QByteArray.hex)": "QtCore.QByteArray('000000ff00000000fd00000001000000030000074b000003c6fc0100000001fc000000000000074b0000023000fffffffc0200000002fb00000058007200710074005f007000750062006c00690073006800650072005f005f005000750062006c00690073006800650072005f005f0031005f005f005000750062006c006900730068006500720057006900640067006500740100000013000001b30000008a00fffffffb00000072007200710074005f0073006500720076006900630065005f00630061006c006c00650072005f005f005300650072007600690063006500430061006c006c00650072005f005f0031005f005f005300650072007600690063006500430061006c006c0065007200570069006400670065007401000001cc0000020d0000012000ffffff0000074b0000000000000004000000040000000800000008fc00000001000000030000000100000036004d0069006e0069006d0069007a006500640044006f0063006b00570069006400670065007400730054006f006f006c0062006100720000000000ffffffff0000000000000000')",
+          "pretty-print": "                   K 0                                                                                                                                 K                                                      "
+        }
+      },
+      "groups": {
+        "toolbar_areas": {
+          "keys": {
+            "MinimizedDockWidgetsToolbar": {
+              "type": "repr",
+              "repr": "8"
+            }
+          },
+          "groups": {}
+        }
+      }
+    }
+  }
+}

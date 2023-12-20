@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<package>
+  <name>ur_description</name>
+  <version>1.0.0</version>
+  <description>
+      URDF description for Universal UR5/10 robot arms
+  </description>
+
+  <author>Wim Meeussen</author>
+  <author email="kphawkins@gatech.edu">Kelsey Hawkins</author>
+  <author>Mathias Ludtke</author>
+  <author email="fxm@ipa.fhg.de">Felix Messmer</author>
+
+  <author email="maximilian.kraemer@tu-dortmund.de">Maximilian Krämer</author>
+
+  <maintainer email="maximilian.kraemer@tu-dortmund.de">Maximilian Krämer</maintainer>
+  <maintainer email="heiko.renz@tu-dortmund.de">Heiko Renz</maintainer>
+
+  <license>BSD</license>
+
+  <url type="website">https://www.rst.e-technik.tu-dortmund.de</url>
+
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <run_depend>robot_state_publisher</run_depend>
+  <run_depend>joint_state_publisher</run_depend>
+  <run_depend>joint_state_publisher_gui</run_depend>
+  <run_depend>rviz</run_depend>
+
+  <export>
+  </export>
+</package>
