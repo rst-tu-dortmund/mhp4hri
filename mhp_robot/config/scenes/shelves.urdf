@@ -1,0 +1,301 @@
+<!-- /*********************************************************************
+*
+*  Software License Agreement
+*
+*  Copyright (c) 2023,
+*  TU Dortmund University, Institute of Control Theory and System Engineering
+*  All rights reserved.
+*
+*  This program is free software: you can redistribute it and/or modify
+*  it under the terms of the GNU General Public License as published by
+*  the Free Software Foundation, either version 3 of the License, or
+*  (at your option) any later version.
+*
+*  This program is distributed in the hope that it will be useful,
+*  but WITHOUT ANY WARRANTY; without even the implied warranty of
+*  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+*  GNU General Public License for more details.
+*
+*  You should have received a copy of the GNU General Public License
+*  along with this program.  If not, see <https://www.gnu.org/licenses/>.
+*
+*  Authors: Maximilian Krämer
+*  Maintainer(s)/Modifier(s): Heiko Renz
+*********************************************************************/ -->
+
+<?xml version="1.0"?>
+<robot name="scene">
+
+<link name="world"/>
+
+<material name="wood">
+    <color rgba="1.0 0.6 0.2 1.0"/>
+</material>
+
+<joint name="shelve_1_base" type="fixed">
+  <parent link="world"/>
+  <child link="shelve_1_base"/>
+  <origin rpy="0.0 0.0 0.0" xyz="0.95 0.7 0.025"/>
+</joint>
+
+<joint name="shelve_1_wall_l" type="fixed">
+  <parent link="shelve_1_base"/>
+  <child link="shelve_1_wall_l"/>
+  <origin rpy="1.57 0.0 0.0" xyz="0.0 0.41 0.975"/>
+</joint>
+
+<joint name="shelve_1_wall_r" type="fixed">
+  <parent link="shelve_1_base"/>
+  <child link="shelve_1_wall_r"/>
+  <origin rpy="1.57 0.0 0.0" xyz="0.0 -0.41 0.975"/>
+</joint>
+
+<joint name="shelve_1_floor_1" type="fixed">
+  <parent link="shelve_1_base"/>
+  <child link="shelve_1_floor_1"/>
+  <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.495"/>
+</joint>
+
+<joint name="shelve_1_floor_2" type="fixed">
+  <parent link="shelve_1_base"/>
+  <child link="shelve_1_floor_2"/>
+  <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.975"/>
+</joint>
+
+<joint name="shelve_1_floor_3" type="fixed">
+  <parent link="shelve_1_base"/>
+  <child link="shelve_1_floor_3"/>
+  <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 1.455"/>
+</joint>
+
+<joint name="shelve_1_top" type="fixed">
+  <parent link="shelve_1_base"/>
+  <child link="shelve_1_top"/>
+  <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 1.95"/>
+</joint>
+
+<joint name="shelve_2_base" type="fixed">
+  <parent link="world"/>
+  <child link="shelve_2_base"/>
+  <origin rpy="0.0 0.0 0.0" xyz="0.95 -0.34 0.025"/>
+</joint>
+
+<joint name="shelve_2_wall_l" type="fixed">
+  <parent link="shelve_2_base"/>
+  <child link="shelve_2_wall_l"/>
+  <origin rpy="1.57 0.0 0.0" xyz="0.0 0.41 0.975"/>
+</joint>
+
+<joint name="shelve_2_wall_r" type="fixed">
+  <parent link="shelve_2_base"/>
+  <child link="shelve_2_wall_r"/>
+  <origin rpy="1.57 0.0 0.0" xyz="0.0 -0.41 0.975"/>
+</joint>
+
+<joint name="shelve_2_floor_1" type="fixed">
+  <parent link="shelve_2_base"/>
+  <child link="shelve_2_floor_1"/>
+  <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.495"/>
+</joint>
+
+<joint name="shelve_2_floor_2" type="fixed">
+  <parent link="shelve_2_base"/>
+  <child link="shelve_2_floor_2"/>
+  <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.975"/>
+</joint>
+
+<joint name="shelve_2_floor_3" type="fixed">
+  <parent link="shelve_2_base"/>
+  <child link="shelve_2_floor_3"/>
+  <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 1.455"/>
+</joint>
+
+<joint name="shelve_2_top" type="fixed">
+  <parent link="shelve_2_base"/>
+  <child link="shelve_2_top"/>
+  <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 1.95"/>
+</joint>
+
+<link name="shelve_1_base">
+  <inertia>
+    <mass value="1" />
+    <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0" />
+  </inertia>
+  <visual>
+  <material name="wood"/>
+    <geometry>
+        <box size="0.4 0.8 0.05" />
+    </geometry>
+  </visual>
+</link>
+
+<link name="shelve_1_wall_l">
+  <inertia>
+    <mass value="1" />
+    <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0" />
+  </inertia>
+  <visual>
+  <material name="wood"/>
+    <geometry>
+        <box size="0.4 2.0 0.02" />
+    </geometry>
+  </visual>
+</link>
+
+<link name="shelve_1_wall_r">
+  <inertia>
+    <mass value="1" />
+    <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0" />
+  </inertia>
+  <visual>
+  <material name="wood"/>
+    <geometry>
+        <box size="0.4 2.0 0.02" />
+    </geometry>
+  </visual>
+</link>
+
+<link name="shelve_1_floor_1">
+  <inertia>
+    <mass value="1" />
+    <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0" />
+  </inertia>
+  <visual>
+  <material name="wood"/>
+    <geometry>
+        <box size="0.4 0.8 0.02" />
+    </geometry>
+  </visual>
+</link>
+
+<link name="shelve_1_floor_2">
+  <inertia>
+    <mass value="1" />
+    <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0" />
+  </inertia>
+  <visual>
+  <material name="wood"/>
+    <geometry>
+        <box size="0.4 0.8 0.02" />
+    </geometry>
+  </visual>
+</link>
+
+<link name="shelve_1_floor_3">
+  <inertia>
+    <mass value="1" />
+    <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0" />
+  </inertia>
+  <visual>
+  <material name="wood"/>
+    <geometry>
+        <box size="0.4 0.8 0.02" />
+    </geometry>
+  </visual>
+</link>
+
+<link name="shelve_1_top">
+  <inertia>
+    <mass value="1" />
+    <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0" />
+  </inertia>
+  <visual>
+  <material name="wood"/>
+    <geometry>
+        <box size="0.4 0.8 0.05" />
+    </geometry>
+  </visual>
+</link>
+
+<link name="shelve_2_base">
+  <inertia>
+    <mass value="1" />
+    <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0" />
+  </inertia>
+  <visual>
+  <material name="wood"/>
+    <geometry>
+        <box size="0.4 0.8 0.05" />
+    </geometry>
+  </visual>
+</link>
+
+<link name="shelve_2_wall_l">
+  <inertia>
+    <mass value="1" />
+    <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0" />
+  </inertia>
+  <visual>
+  <material name="wood"/>
+    <geometry>
+        <box size="0.4 2.0 0.02" />
+    </geometry>
+  </visual>
+</link>
+
+<link name="shelve_2_wall_r">
+  <inertia>
+    <mass value="1" />
+    <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0" />
+  </inertia>
+  <visual>
+  <material name="wood"/>
+    <geometry>
+        <box size="0.4 2.0 0.02" />
+    </geometry>
+  </visual>
+</link>
+
+<link name="shelve_2_floor_1">
+  <inertia>
+    <mass value="1" />
+    <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0" />
+  </inertia>
+  <visual>
+  <material name="wood"/>
+    <geometry>
+        <box size="0.4 0.8 0.02" />
+    </geometry>
+  </visual>
+</link>
+
+<link name="shelve_2_floor_2">
+  <inertia>
+    <mass value="1" />
+    <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0" />
+  </inertia>
+  <visual>
+  <material name="wood"/>
+    <geometry>
+        <box size="0.4 0.8 0.02" />
+    </geometry>
+  </visual>
+</link>
+
+<link name="shelve_2_floor_3">
+  <inertia>
+    <mass value="1" />
+    <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0" />
+  </inertia>
+  <visual>
+  <material name="wood"/>
+    <geometry>
+        <box size="0.4 0.8 0.02" />
+    </geometry>
+  </visual>
+</link>
+
+<link name="shelve_2_top">
+  <inertia>
+    <mass value="1" />
+    <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0" />
+  </inertia>
+  <visual>
+  <material name="wood"/>
+    <geometry>
+        <box size="0.4 0.8 0.05" />
+    </geometry>
+  </visual>
+</link>
+
+</robot>

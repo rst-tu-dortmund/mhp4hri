@@ -1,0 +1,58 @@
+<!-- /*********************************************************************
+*
+*  Software License Agreement
+*
+*  Copyright (c) 2023,
+*  TU Dortmund University, Institute of Control Theory and System Engineering
+*  All rights reserved.
+*
+*  This program is free software: you can redistribute it and/or modify
+*  it under the terms of the GNU General Public License as published by
+*  the Free Software Foundation, either version 3 of the License, or
+*  (at your option) any later version.
+*
+*  This program is distributed in the hope that it will be useful,
+*  but WITHOUT ANY WARRANTY; without even the implied warranty of
+*  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+*  GNU General Public License for more details.
+*
+*  You should have received a copy of the GNU General Public License
+*  along with this program.  If not, see <https://www.gnu.org/licenses/>.
+*
+*  Authors: Maximilian Krämer
+*  Maintainer(s)/Modifier(s): Heiko Renz
+*********************************************************************/ -->
+
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://ros.org/wiki/xacro">
+
+  <xacro:property name="id" value="$(arg id)" />
+
+  <xacro:macro name="plane">
+    <link name="plane_${id}_link">
+      <visual>
+        <origin rpy="0 0 0" xyz="0 0 0"/>
+        <geometry>
+          <box size="4.0 2.0 0.02"/>
+        </geometry>
+      </visual>
+      <collision>
+        <origin rpy="0 0 0" xyz="0 0 0"/>
+        <geometry>
+          <box size="4.0 2.0 0.02"/>
+        </geometry>
+      </collision>
+      <inertial>
+       <mass value="0.0005" />
+       <inertia ixx="5.8083e-4" ixy="0" ixz="0" iyy="3.0833e-5" iyz="0" izz="5.9083e-4" />
+      </inertial>
+    </link>
+  </xacro:macro>
+
+  <gazebo>
+    <static>true</static>
+  </gazebo>
+
+  <xacro:plane/>
+
+</robot>

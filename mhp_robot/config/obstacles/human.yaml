@@ -1,0 +1,31 @@
+# /*********************************************************************
+# *
+# *  Software License Agreement
+# *
+# *  Copyright (c) 2023,
+# *  TU Dortmund University, Institute of Control Theory and System Engineering
+# *  All rights reserved.
+# *
+# *  This program is free software: you can redistribute it and/or modify
+# *  it under the terms of the GNU General Public License as published by
+# *  the Free Software Foundation, either version 3 of the License, or
+# *  (at your option) any later version.
+# *
+# *  This program is distributed in the hope that it will be useful,
+# *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+# *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# *  GNU General Public License for more details.
+# *
+# *  You should have received a copy of the GNU General Public License
+# *  along with this program.  If not, see <https://www.gnu.org/licenses/>.
+# *
+# *  Authors: Heiko Renz
+# *  Maintainer(s)/Modifier(s): 
+# *********************************************************************/
+
+humans:
+  - id: 0
+    name: Heiko_upper_ # Name of the human frames inside the rosbag for the usage with the docker container 
+    length: [0.968, 0.507, 0.0, 0.269, 0.242, 0.0, 0.269, 0.237, 0.0, 0.968] # Length of the human body parts
+    radius: [0.2, 0.2, 0.139, 0.06, 0.06, 0.0, 0.06, 0.06, 0.0, 0.2] # Radius of the human body parts
+    joint_angles: [-0.097, 0.363, 1.021, 1.22, -0.325, 0.11, 0.757, 1.31, -1.074, 0.093, 0.0] # Joint angles of the human skeleton (default values)

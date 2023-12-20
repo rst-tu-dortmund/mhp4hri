@@ -1,0 +1,5 @@
+<?xml version="1.0"?>
+<launch>
+  <arg name="limited" default="true" />
+  <param name="robot_description" command="$(find xacro)/xacro '$(find ur_description)/urdf/ur10_robot.urdf.xacro' limited:=$(arg limited)" />
+</launch>

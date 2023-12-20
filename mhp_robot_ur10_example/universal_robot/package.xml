@@ -1,0 +1,34 @@
+<package>
+  <name>universal_robot</name>
+  <version>1.0.0</version>
+  <description>
+      Drivers, description, and utilities for Universal Robot Arms.
+  </description>
+
+  <license>GPLv3</license>
+
+  <url type="website">https://www.rst.e-technik.tu-dortmund.de</url>
+
+  <author email="sedwards@swri.org">Shaun Edwards</author>
+  <author>Stuart Glaser</author>
+  <author email="kphawkins@gatech.edu">Kelsey Hawkins</author>
+  <author>Wim Meeussen</author>
+  <author email="fxm@ipa.fhg.de">Felix Messmer</author>
+
+
+  <author email="maximilian.kraemer@tu-dortmund.de">Maximilian Krämer</author>
+
+  <maintainer email="heiko.renz@tu-dortmund.de">Heiko Renz</maintainer>
+  
+  <buildtool_depend>catkin</buildtool_depend>  
+  <run_depend>ur_description</run_depend>
+  <run_depend>ur_modern_driver</run_depend>
+  <run_depend>ur_utilities</run_depend>
+  <run_depend>ur_launch</run_depend>
+  <run_depend>ur_gazebo</run_depend>
+  <run_depend>ur_msgs</run_depend>
+
+  <export>
+    <metapackage/>
+  </export>
+</package>

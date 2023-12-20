@@ -1,0 +1,25 @@
+planes:
+ - id: 1
+   group_id: 1
+   name: Wall1
+   margin: 0.05
+   support_vector: [3.0, 0.0, 1.0]
+   normal_vector: [-1.0, 0.0, 0.0]
+ - id: 2
+   group_id: 1
+   name: Wall2
+   margin: 0.05
+   support_vector: [0.0, 3.0, 1.0]
+   normal_vector: [0.0, -1.0, 0.0]
+ - id: 3
+   group_id: 1
+   name: Wall3
+   margin: 0.05
+   support_vector: [0.0, -3.0, 1.0]
+   normal_vector: [0.0, 1.0, 0.0]
+ - id: 4
+   group_id: 1
+   name: Wall4
+   margin: 0.05
+   support_vector: [-3.0, 0.0, 1.0]
+   normal_vector: [1.0, 0.0, 0.0]
