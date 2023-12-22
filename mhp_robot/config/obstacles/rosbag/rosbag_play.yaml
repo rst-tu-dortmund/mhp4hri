@@ -23,6 +23,6 @@
 # *********************************************************************/
 
 bag_name: test_motion.bag # name of the rosbag
-bag_path: /root/catkin_ws/src/mhp_review/mhp_robot/config/obstacles/rosbag/ # absolute path of the ros bag
+bag_path: /root/catkin_ws/src/mhp4hri/mhp_robot/config/obstacles/rosbag/ # absolute path of the ros bag
 bag_start_time: 7
 bag_loop: false
