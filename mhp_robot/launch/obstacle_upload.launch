@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<launch>
+  <arg name="static_obstacles" default="$(find mhp_robot)/config/obstacles/none.yaml"/>
+  <arg name="dynamic_obstacles" default="$(find mhp_robot)/config/obstacles/none.yaml"/>
+  <arg name="planes" default="$(find mhp_robot)/config/obstacles/none.yaml"/>
+  <arg name="utility_objects" default="$(find mhp_robot)/config/obstacles/none.yaml"/>
+  <arg name="humans" default="$(find mhp_robot)/config/obstacles/none.yaml"/>
+  <arg name="obstacle_trajectories" default="$(find mhp_robot)/config/obstacles/none.yaml"/>
+  <arg name="human_trajectories" default="$(find mhp_robot)/config/obstacles/none.yaml"/>
+  <arg name="ns" default=""/>
+
+  <!-- Load static obstacles from YAML file to parameter server -->
+  <rosparam file="$(arg static_obstacles)" command="load" ns="$(arg ns)"/>
+
+  <!-- Load dynamic obstacles from YAML file to parameter server -->
+  <rosparam file="$(arg dynamic_obstacles)" command="load" ns="$(arg ns)"/>
+
+  <!-- Load planes from YAML file to parameter server -->
+  <rosparam file="$(arg planes)" command="load" ns="$(arg ns)"/>
+
+  <!-- Load utility objects from YAML file to parameter server -->
+  <rosparam file="$(arg utility_objects)" command="load" ns="$(arg ns)"/>
+
+  <!-- Load humans from YAML file to parameter server -->
+  <rosparam file="$(arg humans)" command="load" ns="$(arg ns)"/>
+
+  <!-- Load obstacle traectories from YAML file to parameter server -->
+  <rosparam file="$(arg obstacle_trajectories)" command="load" ns="$(arg ns)"/>
+
+  <!-- Load human trajectories from YAML file to parameter server -->
+  <rosparam file="$(arg human_trajectories)" command="load" ns="$(arg ns)"/>
+</launch>

@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<package>
+  <name>ur_launch</name>
+  <version>1.0.0</version>
+  <description>Launch files for UR3/UR10</description>
+
+  <author email="maximilian.kraemer@tu-dortmund.de">Maximilian Krämer</author>
+  <maintainer email="heiko.renz@tu-dortmund.de">Heiko Renz</maintainer>
+  
+  <license>GPLv3</license>
+
+  <url type="website">https://www.rst.e-technik.tu-dortmund.de</url>
+
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <export>
+  </export>
+</package>

@@ -1,0 +1,12 @@
+<?xml version="1.0" ?>
+  <launch>
+
+  <!-- EXAMPLE Static Transform Publisher for MoCap Origin -->
+  <!--node pkg="tf" type="static_transform_publisher" name="mocap_transform_broadcaster" args="0.1957 0.0 -0.0005 0.5 0.5 0.5 0.5 world mocap 100" /-->
+
+  <rosparam file= "$(find mhp_robot)/config/mocap/server.yaml" ns="robot_mocap" command="load" />
+
+  <!-- Start robot_mocap_client Node -->
+  <node name="robot_mocap_client" pkg="mhp_robot" type="robot_mocap_client" respawn="false" output="screen" />
+
+</launch>

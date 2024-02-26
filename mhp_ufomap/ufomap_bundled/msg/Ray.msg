@@ -1,0 +1,3 @@
+Point origin
+
+Point direction

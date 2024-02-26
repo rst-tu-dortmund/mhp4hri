@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>ufomap_bundled</name>
+  <version>0.0.0</version>
+  <description>The ufomap_bundled package - Using the UfoMap for the mhp trajectory optimization</description>
+
+  <maintainer email="heiko.renz@tu-dortmund.de">Heiko Renz</maintainer>
+
+  <license>GPLv3/BSD</license>
+
+  <buildtool_depend>catkin</buildtool_depend>
+  <build_depend>nav_msgs</build_depend>
+  <build_depend>cuda</build_depend>
+  <build_depend>roscpp</build_depend>
+  <build_depend>std_msgs</build_depend>
+  <build_depend>geometry_msgs</build_depend>
+  <build_depend>sensor_msgs</build_depend>
+  <build_depend>visualization_msgs</build_depend>
+  <build_depend>message_generation</build_depend>
+  <build_export_depend>nav_msgs</build_export_depend>
+  <build_export_depend>roscpp</build_export_depend>
+  <build_export_depend>std_msgs</build_export_depend>
+  <build_export_depend>visualization_msgs</build_export_depend>
+  <exec_depend>nav_msgs</exec_depend>
+  <exec_depend>roscpp</exec_depend>
+  <exec_depend>std_msgs</exec_depend>
+  <exec_depend>geometry_msgs</exec_depend>
+  <exec_depend>sensor_msgs</exec_depend>
+  <exec_depend>visualization_msgs</exec_depend>
+  <exec_depend>message_runtime</exec_depend>
+  <depend>rviz</depend>
+  <depend>tf2</depend>
+  <depend>tf2_ros</depend>
+  <depend>tf2_sensor_msgs</depend>
+  <depend>std_srvs</depend>
+  <depend>diagnostic_msgs</depend>
+  <depend>dynamic_reconfigure</depend>
+  <depend>pcl_conversions</depend>
+  <!-- The export tag contains other, unspecified, tags -->
+  <export>
+    <!-- Other tools can request additional information be placed here -->
+    <rviz plugin="${prefix}/plugin_description.xml"/>
+  </export>
+</package>

@@ -1,0 +1,211 @@
+
+#  *  Software License Agreement
+#  *
+#  *  Copyright (c) 2023,
+#  *  TU Dortmund University, Institute of Control Theory and System Enginnering
+#  *  All rights reserved.
+#  *
+#  *  This program is free software: you can redistribute it and/or modify
+#  *  it under the terms of the GNU General Public License as published by
+#  *  the Free Software Foundation, either version 3 of the License, or
+#  *  (at your option) any later version.
+#  *
+#  *  This program is distributed in the hope that it will be useful,
+#  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+#  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#  *  GNU General Public License for more details.
+#  *
+#  *  You should have received a copy of the GNU General Public License
+#  *  along with this program.  If not, see <https://www.gnu.org/licenses/>.
+#  *
+#  *  Authors: Heiko Renz
+
+controller:
+  controller_type: PredictiveController 
+  num_ocp_iterations: 1 # Number of OCP iterations per controller iteration
+  auto_update_previous_control_input: true
+  ocp:
+    ocp_type: StructuredOptimalControlProblem
+    u_lb: [-0.5,-0.5,-0.5,-0.5,-0.5,-0.5]
+    u_ub: [0.5,0.5,0.5,0.5,0.5,0.5]
+    x_lb: [-3.1,-3.1,-3.1,-3.1,-3.1,-3.1]
+    x_ub: [3.1,3.1,3.1,3.1,3.1,3.1]
+    system_dynamics:
+      dynamics_type: ParallelIntegratorSystem
+      dimension: 6 # 6 states due to 6 joints of UR10
+      time_constant: 1.0
+      linearization_type: ForwardDifferences # ForwardDifferences or CentralDifferences
+    finite_differences_grid: 
+      #currently only full discretization is supported (future releases may add Hermite-Simpson Collocation, Single-Shooting and Multiple-Shooting)
+      dt: 0.1
+      n: 21
+      warm_start: true # warm start with previous solution
+      fd_collocation: ForwardDiffCollocation # ForwardDiffCollocation or BackwardDiffCollocation or MidpointDiffCollocation or CrankNicolsonDiffCollocation
+      cost_integration_rule: LeftSum # TrapezoidalRule or LeftSum
+    stage_cost:
+      stage_cost_type: URStageCost #URStageCost or None for no stage costs
+      ur_stage_cost:
+        cost_function:
+          stage_cost_function_type: URQuadraticCostJointSpace # Later release may add task space cost function
+          evaluate_states: true
+          evaluate_controls: true
+          evaluate_control_deviation: false
+          Q: [2.0,2.0,2.0,2.0,2.0,2.0] 
+          R: [1.0,1.0,1.0,1.0,1.0,1.0]
+          Rd: [1.0,1.0,1.0,1.0,1.0,1.0]
+        collision_potential:
+          collision_potential_type: URCollisionPotentialMohri # Later release may add various potential functions; URCollisionPotentialMohri or None for no potential function
+      
+          # Weigths and margins for obstacle classes in this order: self_collision, static_obstacles, dynamic_obstacles, ground_collision, roof_collision,plane_collision, human_head_collision, human_trunk_collision, human_limbs_collision
+          weights: [50.0, 50.0, 50.0, 50.0, 50.0, 50.0, 50.0, 50.0, 50.0]
+          margins: [0.05, 0.1, 0.1, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2]
+          
+          # Decide which collision object are considered for the collision potential
+          self_collision: true
+          static_obstacles: true
+          dynamic_obstacles: false
+          ground_collision: true
+          roof_collision: true
+          plane_collision: false
+          human_head_collision: true
+          human_trunk_collision: true
+          human_limbs_collision: true
+
+          # Extended calculation of the Mohri potential (slightly changes the potential function)
+          extended: true
+
+          # Preprocessor calculates distances that remain constant during optimization beforehand (only for static obstacles, planes...)
+          use_preprocessor: false
+
+          # Potential function is calculated only for the smallest distance of each obstacle
+          min_distances: false
+
+          # Potential function with considering obstacle predictions or only using snapshot of current configuration
+          obstacle_prediction: true
+
+          # Use the planner delay as prediction offset for each obstacle
+          prediction_offset: true
+
+          # Use a uncertainty estimation (if no estimation is available this function is deactivated) for the human motion extrapoaltions
+          uncertainty_estimation_human: true
+          uncertainty_mode: SkeletonSplitting # None or SkeletonSplitting or RadiusIncrease
+        information_gain:
+          information_gain_type: URInformationGainSimple # None or URInformationGainSimple
+          weight: 100.0        
+    final_stage_cost:
+      final_stage_cost_type: URFinalStageCost #URFinalStageCost or None for no stage costs
+      ur_final_stage_cost:
+        cost_function:
+          stage_cost_function_type: URQuadraticCostJointSpace # Later release may add task space cost function
+          evaluate_states: true
+          evaluate_controls: true
+          evaluate_control_deviation: false
+          Q: [50.0,50.0,50.0,50.0,50.0,50.0] 
+          R: [1.0,1.0,1.0,1.0,1.0,1.0]
+          Rd: [1.0,1.0,1.0,1.0,1.0,1.0]
+        collision_potential:
+          collision_potential_type: None # Later release may add various potential functions; URCollisionPotentialMohri or None for no potential function
+          
+          # Weigths and margins for obstacle classes in this order: self_collision, static_obstacles, dynamic_obstacles, ground_collision, roof_collision,plane_collision, human_head_collision, human_trunk_collision, human_limbs_collision
+          weights: [50.0, 50.0, 50.0, 50.0, 50.0, 50.0, 50.0, 50.0, 50.0]
+          margins: [0.05, 0.1, 0.1, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2]
+          
+          # Decide which collision object are considered for the collision potential
+          self_collision: true
+          static_obstacles: true
+          dynamic_obstacles: false
+          ground_collision: true
+          roof_collision: true
+          plane_collision: false
+          human_head_collision: true
+          human_trunk_collision: true
+          human_limbs_collision: true
+
+          # Extended calculation of the Mohri potential
+          extended: true
+
+          # Preprocessor calculates distances that remain constant during optimization beforehand (only for static obstacles, planes...)
+          use_preprocessor: false
+
+          # Potential function is calculated only for the smallest distance of each obstacle
+          min_distances: false
+
+          # Potential function with considering obstacle predictions are only using snapshot of current configuration
+          obstacle_prediction: true
+
+          # Use the planner delay as prediction offset for each obstacle
+          prediction_offset: true
+
+          # Use a uncertainty estimation for the human motion extrapoaltions
+          uncertainty_estimation_human: false
+          uncertainty_mode: None # None or SkeletonSplitting or RadiusIncrease
+    stage_equalities:
+      stage_equalities_type: None
+    stage_inequalities:
+      stage_inequalities_type: URInequalityConstraint # URInequalityConstraint or None for no inequality constraints
+      ur_inequality_constraint:
+        acceleration_constraint:
+          ur_acceleration_constraint_type: URAccelerationConstraint # URAccelerationConstraint or None for no acceleration constraints
+          activate: true
+          ud_lb: [-0.5,-0.5,-0.5,-1.0,-1.0,-1.0]
+          ud_ub: [0.5,0.5,0.5,1.0,1.0,1.0]
+        collision_constraint:
+          ur_collision_constraint_type: URCollisionConstraint # URCollisionConstraint or None for no collision constraints
+
+          # Decide which collision objects are considered for the collision constraint and with which threshold
+          self_collision: true
+          static_obstacles: false
+          dynamic_obstacles: false
+          ground_collision: true
+          roof_collision: true
+          plane_collision: false
+          human_head_collision: true
+          human_trunk_collision: true
+          human_limbs_collision: true
+
+          self_collision_threshold: 0.01
+          static_obstacles_threshold: 0.01
+          dynamic_obstacles_threshold: 0.01
+          ground_collision_threshold: 0.01
+          roof_collision_threshold: 0.01
+          plane_collision_threshold: 0.01
+          human_head_collision_threshold: 0.0
+          human_trunk_collision_threshold: 0.0
+          human_limbs_collision_threshold: 0.0
+
+          # Preprocessor calculates distances that remain constant during optimization beforehand (only for static obstacles, planes...)
+          use_preprocessor: false
+
+          # Potential function is calculated only for the smallest distance of each obstacle
+          min_distances: false
+
+          # Potential function with considering obstacle predictions are only using snapshot of current configuration
+          obstacle_prediction: true
+
+          # Use the planner delay as prediction offset for each obstacle
+          prediction_offset: true
+    final_stage_constraints:
+      final_stage_constraints_type: None #None or URFinalStateConstraintJointSpace
+      ur_final_state_constraint_joint_space:
+        S: [1.0,1.0,1.0,1.0,1.0,1.0] # Weighted state distance
+        gamma: 0.02 # threshold
+    stage_preprocessor:
+      stage_preprocessor_type: None # None or URStagePreprocessor (for calculating some distances beforehand, e.g. static obstacles)
+      ur_stage_preprocessor:
+        roof_collision: true
+        ground_collision: true
+        plane_collision: true
+        static_obstacles: true
+        self_collision: true
+    ipopt: # Ipopt solver options (directly passed to Ipopt; for furhter information please refer to: https://coin-or.github.io/Ipopt/OPTIONS.html)
+      iterations: 30 # solver iterations
+      max_wall_time: 0.08  # if <=0 set to 10e6
+      linear_solver: MA57 # MA27 or MA57 or MA77 or MA86 or MA97 or MUMPS (if installed beforehand, since these are all third party libraries)
+      rel_tolerance: 0.5
+      mu_strategy: adaptive # monotone or adaptive
+      hessian_approximation: limited-memory # exact or limited-memory
+      mehrotra_algorithm: no # yes or no
+      warm_start_init_point: yes # yes or no
+      nlp_scaling_method: gradient-based # gradient-based or none
+      check_derivatives_for_naninf: no # yes or no
+      print_level: 2 # 0, 1, ..., 12

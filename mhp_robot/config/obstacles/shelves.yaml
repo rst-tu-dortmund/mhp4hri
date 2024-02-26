@@ -1,0 +1,114 @@
+# /*********************************************************************
+# *
+# *  Software License Agreement
+# *
+# *  Copyright (c) 2023,
+# *  TU Dortmund University, Institute of Control Theory and System Engineering
+# *  All rights reserved.
+# *
+# *  This program is free software: you can redistribute it and/or modify
+# *  it under the terms of the GNU General Public License as published by
+# *  the Free Software Foundation, either version 3 of the License, or
+# *  (at your option) any later version.
+# *
+# *  This program is distributed in the hope that it will be useful,
+# *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+# *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# *  GNU General Public License for more details.
+# *
+# *  You should have received a copy of the GNU General Public License
+# *  along with this program.  If not, see <https://www.gnu.org/licenses/>.
+# *
+# *  Authors: Maximilian Krämer
+# *  Maintainer(s)/Modifier(s): Heiko Renz
+# *********************************************************************/
+
+static_obstacles:
+  - id: 4
+    group_id: 2
+    name: S1LW
+    length_x: 0.38
+    length_y: 1.98
+    radius: 0.01
+    translation: [0.76, 1.11, 0.01]
+    rotation: [0.0, 0.0, 1.57]
+  - id: 5
+    group_id: 2
+    name: S1RW
+    length_x: 0.38
+    length_y: 1.98
+    radius: 0.01
+    translation: [0.76, 0.29, 0.01]
+    rotation: [0.0, 0.0, 1.57]
+  - id: 6
+    group_id: 2
+    name: S1B
+    length_x: 0.38
+    length_y: 0.78
+    radius: 0.01
+    translation: [0.76, 0.31, 1.0]
+    rotation: [0.0, 0.0, 0.0]
+  - id: 7
+    group_id: 2
+    name: S1T
+    length_x: 0.38
+    length_y: 0.78
+    radius: 0.01
+    translation: [0.76, 0.31, 1.48]
+    rotation: [0.0, 0.0, 0.0]
+  - id: 8
+    group_id: 2
+    name: SBB
+    length_x: 0.38
+    length_y: 0.78
+    radius: 0.01
+    translation: [0.76, 0.31, 0.52]
+    rotation: [0.0, 0.0, 0.0]
+  - id: 9
+    group_id: 3
+    name: S2LW
+    length_x: 0.38
+    length_y: 1.98
+    radius: 0.01
+    translation: [0.76, 0.07, 0.01]
+    rotation: [0.0, 0.0, 1.57]
+  - id: 10
+    group_id: 3
+    name: S2RW
+    length_x: 0.38
+    length_y: 1.98
+    radius: 0.01
+    translation: [0.76, -0.75, 0.01]
+    rotation: [0.0, 0.0, 1.57]
+  - id: 11
+    group_id: 3
+    name: S2B
+    length_x: 0.38
+    length_y: 0.78
+    radius: 0.01
+    translation: [0.76, -0.73, 0.04]
+    rotation: [0.0, 0.0, 0.0]
+  - id: 12
+    group_id: 3
+    name: S2T
+    length_x: 0.38
+    length_y: 0.78
+    radius: 0.01
+    translation: [0.76, -0.73, 0.52]
+    rotation: [0.0, 0.0, 0.0]
+  - id: 13
+    group_id: 3
+    name: S2TT
+    length_x: 0.38
+    length_y: 0.78
+    radius: 0.01
+    translation: [0.76, -0.73, 1.0]
+    rotation: [0.0, 0.0, 0.0]
+  - id: 14
+    group_id: 3
+    name: S2TTT
+    length_x: 0.38
+    length_y: 0.78
+    radius: 0.01
+    translation: [0.76, -0.73, 1.48]
+    rotation: [0.0, 0.0, 0.0]

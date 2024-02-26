@@ -1,0 +1,134 @@
+<?xml version="1.0" ?>
+<launch>
+  <!-- <node pkg="tf" type="static_transform_publisher" name="fixed_map" args=" 1.3718 0.162617 0.7059 -1.57 0 3.14 world fixed_depth_camera 100" /> -->
+
+<arg name="camera_type" default="azure_kinect" /> <!-- Set camera type. Options are "intel_realsense", "azure_kinect" or "rosbag" for replaying a previously recorded dataset -->
+<arg name="map_type" default="UFOMap" /> <!-- Set map type. Options are "Octomap" or "UFOMap" -->
+<!-- Set arguments depending on camera type -->
+<arg name="pc_topic_name" value="/points2" if="$(eval camera_type== 'azure_kinect')"/>
+<arg name="pc_topic_name" value="/camera/depth/color/points" if="$(eval camera_type== 'intel_realsense')"/>
+<arg name="pc_topic_name" value="/rosbag_pcl/rosbag_pcl_play_node/points_stamped" if="$(eval camera_type== 'rosbag')"/>
+
+<arg name="pc_frame_name" value="depth_camera_link" if="$(eval camera_type== 'azure_kinect')"/>
+<arg name="pc_frame_name" value="camera_link" if="$(eval camera_type== 'intel_realsense')"/>
+
+<arg name="save_times" value="false" />
+
+<arg name="num_startpoints" default="500" />
+<arg name="num_scaling_gridpoints" default="100" />
+
+<arg name="nbv_goals" value="false" />
+<arg name="publish_gain" value="true" />
+<!-- ur10 visualization launch node -->
+
+<group if="$(eval camera_type== 'azure_kinect')">
+  <!-- Azure Kinect node -->
+  <include file="$(find azure_kinect_ros_driver)/launch/driver.launch">
+    <arg name="tf_prefix"                   value="" />  <!-- Prefix added to tf frame IDs. It typically contains a trailing '_' unless empty. -->
+    <arg name="overwrite_robot_description" value="false" /> <!-- Flag to publish a standalone azure_description instead of the default robot_descrition parameter--> 
+    <arg name="depth_mode"                  value="NFOV_UNBINNED" /> <!-- Set the depth camera mode, which affects FOV, depth range, and camera resolution. See Azure Kinect documentation for full details. Valid options: NFOV_UNBINNED, NFOV_2X2BINNED, WFOV_UNBINNED, WFOV_2X2BINNED, and PASSIVE_IR -->
+    <arg name="color_enabled"               value="false" />           <!-- Enable or disable the color camera -->
+    <arg name="fps"                         value="30" />              <!-- FPS to run both cameras at. Valid options are 5, 15, and 30 -->
+    <arg name="rgb_point_cloud"             value="false" />           <!-- Colorize the point cloud using the RBG camera. Requires color_enabled and depth_enabled -->
+  </include>  
+
+  <!-- Static Transform Publisher between world (UR10) & azure kinect -->
+  <node pkg="tf" type="static_transform_publisher" name="world_azure" args=" 0.0 0.0 0.06 -1.57 0 0 ee_link camera_base 100" />
+</group>
+
+<group if="$(eval camera_type== 'intel_realsense')">
+  <!-- Intel realsense node -->
+  <include file="$(find realsense2_camera)/launch/rs_camera.launch">
+    <arg name="enable_pointcloud" value="true" /> 
+    <arg name="initial_reset" value="true" /> <!-- Reset camera on startup, else a freezing OS occured sometimes -->
+  </include>  
+
+  <!-- Static Transform Publisher between world (UR10) & realsense -->
+  <node pkg="tf" type="static_transform_publisher" name="world_realsense" args=" 0.0 0.0 0.06 -1.57 0 0 ee_link camera_link 100" />
+</group>
+
+<group if="$(eval camera_type== 'rosbag')" ns="rosbag_pcl">
+  <!-- <param name="use_sim_time" value="false" /> -->
+  <!-- <node pkg="tf" type="static_transform_publisher" name="world_rosbag" args=" 0.0 0.0 0.0 0.0 0.0 0.0 camera_3d_frame_points depth_camera_link 1" /> -->
+  <param name="rosbag_name" value="$(find ur_octomap)/azure_box_2023-11-24-16-33-21.bag" />
+  <param name="bag_loop" value="true" />
+  <param name="bag_start_time" value="0" />
+
+
+  <!-- rosbag play node -->
+  <node pkg="pcl_filters" type="rosbag_pcl_play_node" name="rosbag_pcl_play_node" output="screen" />
+
+  <node pkg="rosservice" type="rosservice" name="rosservice" args="call --wait /rosbag_pcl/rosbag_pcl_play_node/start_pcl_replay true"/>
+  <!-- <node pkg="rosbag" type="play" name="player" output="log" args="-l $(find ur_octomap)/azure_box_2023-11-24-16-33-21.bag" required="false"/> -->
+  <!-- 2023_06_02_11_18_57.bag or azure_box_2023-11-24-16-33-21.bag-->
+
+  <!-- Static Transform Publisher between world (UR10) & realsense -->
+  <!-- <node pkg="rosbag" type="record" name="recorder" output="log" args="-o bag_res_0.01_out0.1_10 /filtered_cloud /occupied_cells_vis_array" required="false"/>  -->
+  <!-- <node pkg="octomap_server" type="octomap_saver" name="octomap_saver" output="screen" args="-f map_res_0.01_out0.1_10.bt" required="true" launch-prefix="bash -c 'sleep 32; $0 $@' "/> -->
+</group>
+
+<!-- point cloud filtering node> -->
+<node name="filter_node" pkg="pcl_filters" type="filter_node" output="screen">
+  <!-- Decide which filters are applied -->
+  <param name="downsampling" value="true" />
+  <param name="remove_outliers" value="false" />
+
+  <!-- Parameters for downsampling and outlier removing-->
+  <param name="voxel_leaf_size" value="0.01" /> 
+  <param name="outlier_radius" value="0.01" />
+  <param name="outlier_min_neighbors" value="2" /> <!-- Higher values significantly decrease the filter frequency -->
+
+  <remap from="input" to="$(arg pc_topic_name)" />
+</node> 
+
+<group if="$(eval map_type== 'Octomap')">
+  <!-- Octomap node  -->
+  <node pkg="octomap_server" type="octomap_server_node" name="octomap_server" output="screen">  
+    <param name="resolution" value="0.005" />
+    <!-- fixed map frame (set to 'map' if SLAM or localization running!) -->
+    <param name="frame_id" type="string" value="$(arg pc_frame_name)" />
+    <!-- maximum range to integrate (speedup!) -->
+    <param name="sensor_model/max_range" value="1.5" />
+    <param name="latch" type="bool" value="false" />
+    <param name="filter_ground" type="bool" value="false" />
+    <!-- data source to integrate (PointCloud2) -->
+    <remap from="cloud_in" to="/filtered_cloud" />
+
+    <!-- Parameters Information distribution -->
+    <param name="information_distribution" value="false" />
+  </node>
+</group>
+
+<group if="$(eval map_type== 'UFOMap')">
+<!-- UFOMap node; Note that the frame_id has to be changed in the cfg -->
+  <include file="$(find ufomap_bundled)/launch/server.launch">
+    <arg name="resolution" value="0.01" />
+    <arg name="num_workers" value="8" />
+    <arg name="cloud_in" value="/filtered_cloud" />
+    <arg name="information_distribution" value="true" />
+
+    <arg name="num_startpoints" value="$(arg num_startpoints)" />
+    <arg name="num_scaling_gridpoints" value="$(arg num_scaling_gridpoints)" />
+  </include>
+  <!-- <node pkg="rosbag" type="record" name="recorder" output="log" args="-o bag_res_0.01_out_0.01_2 /filtered_cloud /ufomap_server_node/map" required="false"/>  -->
+  <!-- <node pkg="ufomap_bundled" type="ufomap_saver_node" name="ufomap_saver_node" output="screen" args="-f map_res_0.01_out_0.01_2.um" required="true" launch-prefix="bash -c 'sleep 32; $0 $@' "/> -->
+</group>
+
+<group if="$(arg save_times)">
+  <arg name="bag_name" value="time_bag_$(arg num_startpoints)_$(arg num_scaling_gridpoints)" />
+  <node pkg="rosbag" type="record" name="recorder" output="log" args="-l 105 -o $(arg bag_name) /ufomap_server_node/info_gpu_times /ufomap_server_node/info" required="true" launch-prefix="bash -c 'sleep 5; $0 $@' "/>
+</group>
+
+<group if="$(arg nbv_goals)">
+  <node pkg="ur_utilities" type="ur_nbv" name="ur_nbv" output="screen"/>
+</group>
+
+<group if="$(arg publish_gain)">
+  <node pkg="ur_utilities" type="ur_information_gain" name="ur_information_gain" output="screen"/>
+</group>
+
+<include file="$(find ur_launch)/launch/ur10_real_visualization.launch">
+</include>
+
+</launch>
+

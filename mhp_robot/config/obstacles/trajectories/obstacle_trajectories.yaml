@@ -1,0 +1,42 @@
+# /*********************************************************************
+# *
+# *  Software License Agreement
+# *
+# *  Copyright (c) 2023,
+# *  TU Dortmund University, Institute of Control Theory and System Engineering
+# *  All rights reserved.
+# *
+# *  This program is free software: you can redistribute it and/or modify
+# *  it under the terms of the GNU General Public License as published by
+# *  the Free Software Foundation, either version 3 of the License, or
+# *  (at your option) any later version.
+# *
+# *  This program is distributed in the hope that it will be useful,
+# *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+# *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# *  GNU General Public License for more details.
+# *
+# *  You should have received a copy of the GNU General Public License
+# *  along with this program.  If not, see <https://www.gnu.org/licenses/>.
+# *
+# *  Authors: Maximilian Krämer
+# *  Maintainer(s)/Modifier(s): Heiko Renz
+# *********************************************************************/
+
+obstacle_trajectories:
+  - obstacle_id: 1
+    duration: 2.0
+    steps: 100
+    loop: false
+    t1: [1.6, 0.0, 0.9]
+    r1: [0.0, -2.36, 0.0]
+    t2: [1.6, 0.0, 0.9]
+    r2: [0.0, -3.93, 0.0]
+  - obstacle_id: 2
+    duration: 2.0
+    steps: 100
+    loop: false
+    t1: [1.5, 0.25, 0.9]
+    r1: [1.8, 0.0, 0.0]
+    t2: [1.5, 0.25, 0.9]
+    r2: [-1.8, 0.0, 0.0]

@@ -1,0 +1,108 @@
+<?xml version="1.0" ?>
+<launch>
+
+
+    <!-- **************************************************************************************************************************************************** -->
+    <!-- Start UR Simulation -->
+    <!-- **************************************************************************************************************************************************** -->
+
+    <!-- Arguments for ur configuration -->
+    <arg name="limited" default="true"/> <!-- Add joint limits in URDF file -->
+
+    <!-- Arguments for gazebo start -->
+    <arg name="gazebo_gui" default="false"/> <!-- Start gazebo with gui -->
+    <arg name="gazebo_paused" default="false"/> <!-- Start gazebo paused -->
+    <arg name="gazebo_world" default="$(find mhp_robot)/config/worlds/default.world"/> <!-- In mhp_robot since it's usable for various robots -->
+
+    <!-- Arguments for static scene - Attention only for visualization. The scene elements are not considered as obstacle directly-->
+    <arg name="static_scene" default="$(find mhp_robot)/config/scenes/empty.urdf"/> <!-- In mhp_robot since it's usable for various robots -->
+
+    <!-- Upload UR10 description to robot_description parameter -->
+    <include file="$(find ur_description)/launch/ur10_upload.launch">
+        <arg name="limited" value="$(arg limited)"/>
+    </include>
+
+    <!-- Upload Static Scene as robot_description parameter (for example to start with objects in scene visualization)-->
+    <include file="$(find mhp_robot)/launch/scene_upload.launch">
+        <arg name="static_scene" value="$(arg static_scene)"/>
+    </include>
+
+    <!-- Start Robot (Fill in the ip and payload of your UR10) -->
+    <arg name="robot_ip" default="xx.xx.x.x"/>
+    <arg name="min_payload"  default="x.x"/>
+    <arg name="max_payload"  default="x.x"/>
+    <include file="$(find ur_modern_driver)/launch/ur10_ros_control.launch">
+      <arg name="robot_ip" value="$(arg robot_ip)"/>
+      <arg name="min_payload" value="$(arg min_payload)"/>
+      <arg name="max_payload" value="$(arg max_payload)"/>
+    </include>
+
+    <!-- Use this launch file in case you want to control your UR10 with a rqt controller gui -->
+    <!-- <include file="$(find ur_modern_driver)/launch/ur10_rqt.launch" /> -->
+
+    <!-- **************************************************************************************************************************************************** -->
+    <!-- Start  Environment -->
+    <!-- **************************************************************************************************************************************************** -->
+
+    <!-- Arguments for environment (obstacles etc.) -->
+    <arg name="workspace_monitor_mode" default="mocap"/> <!-- You can use mocap in case you have a mocap system available. Otherwise use tf or bag for a recorded motion. -->
+    <!-- Options are manual (move dynamic_obstacles by hand), automatic (dynamic_obstacles and humans move on trajectories from corresponding arguments), bag (starting a prerecorded rosbag with obstacle positions and publishes in tf), tf (listens to obstacle positions on tf), mocap (starting a live connection to a mocap system, which publishes data on tf) --> 
+
+    <!-- Arguments for path definitions of obstacle elements -->
+    <arg name="static_obstacles" default="$(find mhp_robot)/config/obstacles/none.yaml"/>
+    <arg name="dynamic_obstacles" default="$(find mhp_robot)/config/obstacles/none.yaml"/>
+    <arg name="planes" default="$(find mhp_robot)/config/obstacles/none.yaml"/>
+    <arg name="utility_objects" default="$(find mhp_robot)/config/obstacles/none.yaml"/>
+    <arg name="humans" default="$(find mhp_robot)/config/obstacles/none.yaml"/>
+    <arg name="obstacle_trajectories" default="$(find mhp_robot)/config/obstacles/trajectories/none.yaml"/>
+    <arg name="human_trajectories" default="$(find mhp_robot)/config/obstacles/trajectories/none.yaml"/>
+
+    <!-- Arguments for human motion prediction -->
+    <arg name="prediction_mode" default="Polynom"/> <!-- Options are None, Kalman, SPL, Polynom, Golay -->
+    <arg name="foot_print_prediction_mode" default="None" /> <!-- Options are None, Polynom, Golay -->
+    <arg name="uncertainty_mode" default="None"/> <!-- Options are None, GMM and Constant -->
+
+    <!-- Start robot workspace monitor (obstacle processes (static, dynamic, humans (with extrapolation and uncertainty))) -->
+    <include file="$(find mhp_robot)/launch/bringup_scenario.launch">
+        <arg name="static_obstacles" value="$(arg static_obstacles)"/>
+        <arg name="dynamic_obstacles" value="$(arg dynamic_obstacles)"/>
+        <arg name="planes" value="$(arg planes)"/>
+        <arg name="utility_objects" value="$(arg utility_objects)"/>
+        <arg name="humans" value="$(arg humans)"/>
+        <arg name="obstacle_trajectories" value="$(arg obstacle_trajectories)"/>
+        <arg name="human_trajectories" value="$(arg human_trajectories)"/>
+        <arg name="workspace_monitor_mode" value="$(arg workspace_monitor_mode)"/>
+        <arg name="prediction_mode" value="$(arg prediction_mode)"/>
+                <arg name="foot_print_prediction_mode" value="$(arg foot_print_prediction_mode)" />
+                <arg name="uncertainty_mode" value="$(arg uncertainty_mode)" />
+            </include>
+
+    <!-- Start RViz -->
+    <arg name="rviz_config" default="$(find mhp_robot)/config/rviz/ur.rviz"/>
+    <include file="$(find ur_description)/launch/rviz.launch">
+          <arg name="rviz_config" value="$(arg rviz_config)"/>
+    </include>
+
+    <!-- Start distance publisher -->
+    <node name="ur_distance_publisher" pkg="ur_utilities" type="ur_distance_publisher" output="screen">
+        <remap from="/joint_states" to="/ur_driver/joint_states" />
+    </node>
+
+    <!-- Static Transform Publisher for MoCap Origin. Only required for transforming (our) Mocap measurements in the world frame of the robot -->
+    <!-- <node pkg="tf" type="static_transform_publisher" name="mocap_transform_broadcaster" args="0.1957 0.0 -0.0005 0.5 0.5 0.5 0.5 world mocap 100" /> -->
+
+
+    <!-- **************************************************************************************************************************************************** -->
+    <!-- Start  MHP -->
+    <!-- **************************************************************************************************************************************************** -->
+
+    <node name="ur_mhp_planner" pkg="ur10_planner" type="ur_mhp_planner" output="screen">
+        <rosparam command="load" file="$(find mhp_planner)/config/default_controller.yaml" />
+        <rosparam command="load" file="$(find mhp_planner)/config/default_plant_real.yaml" />
+        <rosparam command="load" file="$(find mhp_planner)/config/default_task.yaml" />
+        <remap from="/joint_states" to="/ur10/joint_states"/>
+        <remap from="/controller_manager/switch_controller" to="/ur10/controller_manager/switch_controller"/>
+        <remap from="/ur_mhp_planner/joint_speed_controls" to="/ur10/joint_speed"/>
+
+    </node>
+</launch>

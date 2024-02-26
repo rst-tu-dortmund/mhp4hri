@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<launch>
+  <arg name="static_scene" default="$(find mhp_robot)/config/scenes/empty.urdf" />
+
+  <param name="scene_description" textfile="$(arg static_scene)" />
+
+  <node name="scene_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher">
+    <remap from="/joint_states" to="/scene_states" />
+    <remap from="/robot_description" to="/scene_description" />
+  </node>
+</launch>

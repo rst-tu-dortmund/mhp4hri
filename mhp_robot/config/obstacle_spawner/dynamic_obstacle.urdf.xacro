@@ -1,0 +1,248 @@
+<!-- /*********************************************************************
+*
+*  Software License Agreement
+*
+*  Copyright (c) 2023,
+*  TU Dortmund University, Institute of Control Theory and System Engineering
+*  All rights reserved.
+*
+*  This program is free software: you can redistribute it and/or modify
+*  it under the terms of the GNU General Public License as published by
+*  the Free Software Foundation, either version 3 of the License, or
+*  (at your option) any later version.
+*
+*  This program is distributed in the hope that it will be useful,
+*  but WITHOUT ANY WARRANTY; without even the implied warranty of
+*  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+*  GNU General Public License for more details.
+*
+*  You should have received a copy of the GNU General Public License
+*  along with this program.  If not, see <https://www.gnu.org/licenses/>.
+*
+*  Authors: Maximilian Krämer
+*  Maintainer(s)/Modifier(s): Heiko Renz
+*********************************************************************/ -->
+
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://ros.org/wiki/xacro">
+
+  <xacro:property name="type" value="$(arg type)" />
+  <xacro:property name="id" value="$(arg id)" />
+  <xacro:property name="radius" value="$(arg radius)" />
+  <xacro:property name="length_x" value="$(arg length_x)" />
+  <xacro:property name="length_y" value="$(arg length_y)" />
+
+  <xacro:macro name="dynamic_obstacle">
+
+    <xacro:if value="${type == 'sphere'}">
+      <link name="obstacle_${id}_link">
+        <visual>
+          <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0"/>
+          <geometry>
+            <sphere radius="${radius}"/>
+          </geometry>
+        </visual>
+        <collision>
+          <origin rpy="0 0 0" xyz="0 0 0.0"/>
+          <geometry>
+            <sphere radius="${radius}"/>
+          </geometry>
+        </collision>
+        <inertial>
+         <mass value="0.0005" />
+         <inertia ixx="5.8083e-4" ixy="0" ixz="0" iyy="3.0833e-5" iyz="0" izz="5.9083e-4" />
+        </inertial>
+      </link>
+    </xacro:if>
+
+    <xacro:if value="${type == 'cylinder'}">
+      <link name="obstacle_${id}_link">
+        <visual>
+          <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0"/>
+          <geometry>
+            <sphere radius="${radius}"/>
+          </geometry>
+        </visual>
+        <visual>
+          <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 ${length_x}"/>
+          <geometry>
+            <sphere radius="${radius}"/>
+          </geometry>
+        </visual>
+        <visual>
+          <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 ${length_x/2}"/>
+          <geometry>
+            <cylinder radius="${radius}" length="${length_x}"/>
+          </geometry>
+        </visual>
+	<collision>
+          <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0"/>
+          <geometry>
+            <sphere radius="${radius}"/>
+          </geometry>
+        </collision>
+        <collision>
+          <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 ${length_x}"/>
+          <geometry>
+            <sphere radius="${radius}"/>
+          </geometry>
+        </collision>
+        <collision>
+          <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 ${length_x/2}"/>
+          <geometry>
+            <cylinder radius="${radius}" length="${length_x}"/>
+          </geometry>
+        </collision>
+        <inertial>
+         <mass value="0.0005" />
+         <inertia ixx="5.8083e-4" ixy="0" ixz="0" iyy="3.0833e-5" iyz="0" izz="5.9083e-4" />
+        </inertial>
+      </link>
+    </xacro:if>
+
+    <xacro:if value="${type == 'box'}">
+    <link name="obstacle_${id}_link">
+      <visual>
+        <origin rpy="0.0 0.0 0.0" xyz="${length_x/2} ${length_y/2} 0.0"/>
+        <geometry>
+          <box size="${length_x} ${length_y} ${radius*2}"/>
+        </geometry>
+      </visual>
+      <visual>
+        <origin rpy="0.0 -${pi/2} 0.0" xyz="${length_x/2} 0.0 0.0"/>
+        <geometry>
+          <cylinder radius="${radius}" length="${length_x}"/>
+        </geometry>
+      </visual>
+      <visual>
+        <origin rpy="0.0 -${pi/2} 0.0" xyz="${length_x/2} ${length_y} 0.0"/>
+        <geometry>
+          <cylinder radius="${radius}" length="${length_x}"/>
+        </geometry>
+      </visual>
+      <visual>
+        <origin rpy="-${pi/2} 0.0 0.0" xyz="0.0 ${length_y/2} 0.0"/>
+        <geometry>
+          <cylinder radius="${radius}" length="${length_y}"/>
+        </geometry>
+      </visual>
+      <visual>
+        <origin rpy="-${pi/2} 0.0 0.0" xyz="${length_x} ${length_y/2} 0.0"/>
+        <geometry>
+          <cylinder radius="${radius}" length="${length_y}"/>
+        </geometry>
+      </visual>
+      <visual>
+        <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0"/>
+        <geometry>
+          <sphere radius="${radius}"/>
+        </geometry>
+      </visual>
+      <visual>
+        <origin rpy="0.0 0.0 0.0" xyz="${length_x} 0.0 0.0"/>
+        <geometry>
+          <sphere radius="${radius}"/>
+        </geometry>
+      </visual>
+      <visual>
+        <origin rpy="0.0 0.0 0.0" xyz="0.0 ${length_y} 0.0"/>
+        <geometry>
+          <sphere radius="${radius}"/>
+        </geometry>
+      </visual>
+      <visual>
+        <origin rpy="0.0 0.0 0.0" xyz="${length_x} ${length_y} 0.0"/>
+        <geometry>
+          <sphere radius="${radius}"/>
+        </geometry>
+      </visual>
+      <collision>
+        <origin rpy="0.0 0.0 0.0" xyz="${length_x/2} ${length_y/2} 0.0"/>
+        <geometry>
+          <box size="${length_x} ${length_y} ${radius*2}"/>
+        </geometry>
+      </collision>
+      <collision>
+        <origin rpy="0.0 -${pi/2} 0.0" xyz="${length_x/2} 0.0 0.0"/>
+        <geometry>
+          <cylinder radius="${radius}" length="${length_x}"/>
+        </geometry>
+      </collision>
+      <collision>
+        <origin rpy="0.0 -${pi/2} 0.0" xyz="${length_x/2} ${length_y} 0.0"/>
+        <geometry>
+          <cylinder radius="${radius}" length="${length_x}"/>
+        </geometry>
+      </collision>
+      <collision>
+        <origin rpy="-${pi/2} 0.0 0.0" xyz="0.0 ${length_y/2} 0.0"/>
+        <geometry>
+          <cylinder radius="${radius}" length="${length_y}"/>
+        </geometry>
+      </collision>
+      <collision>
+        <origin rpy="-${pi/2} 0.0 0.0" xyz="${length_x} ${length_y/2} 0.0"/>
+        <geometry>
+          <cylinder radius="${radius}" length="${length_y}"/>
+        </geometry>
+      </collision>
+      <collision>
+        <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0"/>
+        <geometry>
+          <sphere radius="${radius}"/>
+        </geometry>
+      </collision>
+      <collision>
+        <origin rpy="0.0 0.0 0.0" xyz="${length_x} 0.0 0.0"/>
+        <geometry>
+          <sphere radius="${radius}"/>
+        </geometry>
+      </collision>
+      <collision>
+        <origin rpy="0.0 0.0 0.0" xyz="0.0 ${length_y} 0.0"/>
+        <geometry>
+          <sphere radius="${radius}"/>
+        </geometry>
+      </collision>
+      <collision>
+        <origin rpy="0.0 0.0 0.0" xyz="${length_x} ${length_y} 0.0"/>
+        <geometry>
+          <sphere radius="${radius}"/>
+        </geometry>
+      </collision>
+      <inertial>
+       <mass value="0.0005" />
+       <inertia ixx="5.8083e-4" ixy="0" ixz="0" iyy="3.0833e-5" iyz="0" izz="5.9083e-4" />
+      </inertial>
+    </link>
+    </xacro:if>
+
+    <xacro:if value="${type == 'ebox'}">
+    <link name="obstacle_${id}_link">
+      <visual>
+        <origin rpy="0.0 0.0 0.0" xyz="${length_x/2} ${length_y/2} -1.0"/>
+        <geometry>
+          <box size="${length_x} ${length_y} 2.0"/>
+        </geometry>
+      </visual>
+      <collision>
+        <origin rpy="0.0 0.0 0.0" xyz="${length_x/2} ${length_y/2} -1.0"/>
+        <geometry>
+          <box size="${length_x} ${length_y} 2.0"/>
+        </geometry>
+      </collision>
+      <inertial>
+       <mass value="0.0005" />
+       <inertia ixx="5.8083e-4" ixy="0" ixz="0" iyy="3.0833e-5" iyz="0" izz="5.9083e-4" />
+      </inertial>
+    </link>
+    </xacro:if>
+  </xacro:macro>
+
+  <gazebo>
+    <static>true</static>
+  </gazebo>
+
+  <xacro:dynamic_obstacle/>
+
+</robot>

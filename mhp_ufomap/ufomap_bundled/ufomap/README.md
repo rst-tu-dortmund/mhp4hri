@@ -1,0 +1,42 @@
+# UFOMap: An Efficient Probabilistic 3D Mapping Framework That Embraces the Unknown
+
+UFOMap is an effienct probabilistic 3D mapping framework with an explicit representation of unknown space.
+
+## Note 
+This package is adapted towards the needs to use in the MHP trajectory planner. This readme is the original readme of the UfoMap package only with the addition of this Note section. 
+Various changes have been applied for the desired usages as well as an embedding of the package into the ufomap_bundled package (containing also the ros support from the UfoMap and adaptions). 
+New scripts are licensed under the GPL 3.0 license. The original UfoMap package is licensed under the BSD 3-Clause License.
+
+
+## Table of Contents
+Please see the [Wiki](https://github.com/UnknownFreeOccupied/ufomap/wiki) for how to install and use UFOMap.
+1. [Setup](https://github.com/UnknownFreeOccupied/ufomap/wiki/Tutorials)
+2. [Tutorials](https://github.com/UnknownFreeOccupied/ufomap/wiki/Setup)
+3. [ROS Tutorials](https://github.com/UnknownFreeOccupied/ufomap/wiki/ROS-Tutorials)
+4. [Advanced ROS Tutorials](https://github.com/UnknownFreeOccupied/ufomap/wiki/Advanced-ROS-Tutorials)
+5. [Performance](https://github.com/UnknownFreeOccupied/ufomap/wiki/Performance)
+6. [Example Outputs](https://github.com/UnknownFreeOccupied/ufomap/wiki/Example-Outputs)
+7. [Data Repository](https://github.com/UnknownFreeOccupied/ufomap/wiki/Data-Repository)
+8. [API](https://github.com/UnknownFreeOccupied/ufomap/wiki/API)
+
+## Credits
+### Paper
+* [IEEE](https://ieeexplore.ieee.org/abstract/document/9158399)
+* [ArXiv](https://arxiv.org/abs/2003.04749)
+### Cite
+If you use UFOMap in a scientific publication, please cite the following paper:
+* Daniel Duberg and Patric Jensfelt, "UFOMap: An Efficient Probabilistic 3D Mapping Framework That Embraces the Unknown," in IEEE Robotics and Automation Letters, vol. 5, no. 4, pp. 6411-6418, Oct. 2020, doi: 10.1109/LRA.2020.3013861.
+```latex
+@article{duberg2020ufomap,
+  author={Daniel Duberg and Patric Jensfelt},
+  journal={IEEE Robotics and Automation Letters}, 
+  title={{UFOMap}: An Efficient Probabilistic {3D} Mapping Framework That Embraces the Unknown}, 
+  year={2020},
+  volume={5},
+  number={4},
+  pages={6411-6418},
+  doi={10.1109/LRA.2020.3013861}
+}
+```
+### Videos
+* [YouTube Playlist](https://youtube.com/playlist?list=PLoZnKRp2UVom4bv2fUVXgI5VCbuTrfrU3)

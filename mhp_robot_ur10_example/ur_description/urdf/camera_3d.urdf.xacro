@@ -1,0 +1,62 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://ros.org/wiki/xacro">
+  <xacro:macro name="camera_3d" params="prefix parent">
+
+    <material name="camera_3d_color">
+      <color rgba="0.4 0.4 0.4 1"/>
+    </material>
+
+    <joint name="${prefix}camera_3d_mount_joint" type="fixed">
+       <parent link="${prefix}${parent}"/>
+       <child link="${prefix}camera_3d_mount_link"/>
+       <origin rpy="${pi/2} 0 ${-pi/2}" xyz="0.008 0 0"/>
+    </joint>
+
+    <link name="${prefix}camera_3d_mount_link">
+
+    </link>
+
+
+    <link name="${prefix}camera_3d_frame">
+
+    </link>
+
+
+
+
+    <link name="${prefix}camera_3d_link_optical" />
+    <link name="${prefix}camera_3d_frame_points"/>
+    <link name="${prefix}camera_3d_depth_camera_link"/>
+
+    <!-- hight 0.75 in camera x :-1.5 in depth 0.293-->
+    <joint name="${prefix}camera_3d_joint" type="fixed">
+       <origin xyz="0.0015 0.072 -0.091" rpy="0 ${pi} 0"/>
+       <parent link="${prefix}camera_3d_mount_link"/>
+       <child link="${prefix}camera_3d_frame"/>
+    </joint>
+
+    <joint name="${prefix}camera_3d_optical_joint" type="fixed">
+      <!-- these values have to be these values otherwise the gazebo camera
+        image won't be aligned properly with the frame it is supposedly
+        originating from -->
+      <origin xyz="0 0 0.03" rpy="0 ${-pi/2} ${-pi/2}"/>
+      <parent link="${prefix}camera_3d_frame"/>
+      <child link="${prefix}camera_3d_link_optical"/>
+    </joint>
+
+  <joint name="${prefix}camera_3d_point_joint" type="fixed">
+    <origin xyz="0 0 0.03" rpy="0 0 ${-pi}"/>
+    <parent link="${prefix}camera_3d_frame"/>
+    <child link="${prefix}camera_3d_frame_points"/>
+  </joint>
+  
+  <joint name="${prefix}camera_3d_depth_camera_joint" type="fixed">
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <parent link="${prefix}camera_3d_frame_points"/>
+    <child link="${prefix}camera_3d_depth_camera_link"/>
+  </joint>
+
+
+
+  </xacro:macro>
+</robot>

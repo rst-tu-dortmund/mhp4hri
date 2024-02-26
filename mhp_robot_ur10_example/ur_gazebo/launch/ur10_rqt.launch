@@ -1,0 +1,11 @@
+<?xml version="1.0" ?>
+<launch>
+
+  <!-- Publisher for UR trajectory messages -->
+  <node name="rqt_joint_trajectory_controller"
+        pkg="rqt_joint_trajectory_controller"
+        type="rqt_joint_trajectory_controller"
+        respawn="false"
+        output="screen"
+  />
+</launch>

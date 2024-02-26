@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+<package>
+  <name>ur_modern_driver</name>
+  <version>1.0.0</version>
+  <description>The new driver for the UR3/UR5/UR10 robot arms from universal robots</description>
+
+  <author email="thomas.timm.dk@gmail.com">Thomas Timm Andersen</author>
+  <maintainer email="maximilian.kraemer@tu-dortmund.de">Maximilian Krämer</maintainer>
+  <maintainer email="heiko.renz@tu-dortmund.de">Heiko Renz</maintainer>
+  
+  <license>BSD</license>
+
+  <url type="website">http://wiki.ros.org/ur_modern_driver</url>
+
+  <buildtool_depend>catkin</buildtool_depend>
+  <build_depend>hardware_interface</build_depend>
+  <build_depend>controller_manager</build_depend>
+  <build_depend>actionlib</build_depend>
+  <build_depend>control_msgs</build_depend>
+  <build_depend>geometry_msgs</build_depend>
+  <build_depend>roscpp</build_depend>
+  <build_depend>sensor_msgs</build_depend>
+  <build_depend>std_msgs</build_depend>
+  <build_depend>trajectory_msgs</build_depend>
+  <build_depend>ur_msgs</build_depend>
+  <build_depend>tf</build_depend>
+  <build_depend>ur_utilities</build_depend>
+  <build_depend>realtime_tools</build_depend>
+
+  <run_depend>hardware_interface</run_depend>
+  <run_depend>controller_manager</run_depend>
+  <run_depend>ros_controllers</run_depend>
+  <run_depend>actionlib</run_depend>
+  <run_depend>control_msgs</run_depend>
+  <run_depend>geometry_msgs</run_depend>
+  <run_depend>roscpp</run_depend>
+  <run_depend>sensor_msgs</run_depend>
+  <run_depend>std_msgs</run_depend>
+  <run_depend>trajectory_msgs</run_depend>
+  <run_depend>ur_msgs</run_depend>
+  <run_depend>ur_description</run_depend>
+  <run_depend>tf</run_depend>
+  <run_depend>ur_utilities</run_depend>
+  <run_depend>realtime_tools</run_depend>
+
+  <export>
+  </export>
+</package>
