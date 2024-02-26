@@ -8,6 +8,7 @@
 
     <!-- Arguments for ur configuration -->
     <arg name="limited" default="true"/> <!-- Add joint limits in URDF file -->
+    <arg name="camera_frame" default="false"/> <!-- Add camera frame -->
 
     <!-- Arguments for gazebo start -->
     <arg name="gazebo_gui" default="false"/> <!-- Start gazebo with gui -->
@@ -20,6 +21,7 @@
     <!-- Upload UR10 description to robot_description parameter -->
     <include file="$(find ur_description)/launch/ur10_upload.launch">
         <arg name="limited" value="$(arg limited)"/>
+        <arg name="camera_frame" value="$(arg camera_frame)"/>
     </include>
 
     <!-- Upload Static Scene as robot_description parameter (for example to start with objects in scene visualization)-->

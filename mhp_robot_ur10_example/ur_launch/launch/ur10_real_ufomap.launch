@@ -127,7 +127,8 @@
   <node pkg="ur_utilities" type="ur_information_gain" name="ur_information_gain" output="screen"/>
 </group>
 
-<include file="$(find ur_launch)/launch/ur10_real_visualization.launch">
+<include file="$(find ur_launch)/launch/ur10_real.launch">
+  <arg name="camera_frame" value="true" />
 </include>
 
 </launch>
