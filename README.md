@@ -38,6 +38,11 @@ A new dependency in addition to the already listed is Eigen Rand: https://bab2mi
 In order to use the GPU-accelerated version of the information distribution, you need to install the CUDA Toolkit (https://developer.nvidia.com/cuda-downloads). 
 It is tested with version 11.8.
 
+For testing the feature, you can use our additional provided data that you can download from the following link: https://tu-dortmund.sciebo.de/s/0lG0yOYX3jG1dzs/download
+The data is a compressed ROS bag file.
+Please decompress the file and place the decompressed bag in the new folder `mhp_ufomap/ufomap_bundled/config/`.
+The new launch file `mhp_robot_ur10_example/ur_launch/ur10_sim_ufomap.launch` is already set up to use the bag file for testing.
+
 ## Citation
 If you use this repository for your research, please cite our paper:
 
